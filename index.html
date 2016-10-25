@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app='inventory'>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management</title>
+    <link rel="stylesheet" href="dist/styles/main.min.css" type="text/css">
+  </head>
+  <body>
+
+    <main>
+      <ul ng-controller="shopKeeper as shop" class="shop">
+        <li>
+          <span ng-repeat="(type, value) in shop.inventory[0]" class='item {{type}}'>{{type}}</span>
+        </li>
+        <li ng-repeat="item in shop.inventory">
+          <span ng-repeat="(type, value) in item" class='item {{type}}'>{{value}}</span>
+        </li>
+      </ul>
+    </main>
+
+
+<!--
+!!!!!!!
+SCRIPTS
+!!!!!!!
+-->
+    <!-- <script src="dist/js/main.min.js"></script> -->
+    <script src="src/js/jquery-3.1.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="src/js/handlebars-v4.0.5.js"></script>
+    <script src="src/js/main.js"></script>
+    <script src="src/js/utils.js"></script>
+  </body>
+</html>
