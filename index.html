@@ -14,7 +14,7 @@
       class="shop">
         <li>
           <span
-          ng-repeat="category in shop.header"
+          ng-repeat="category in shop.getHeader()"
           ng-if="shop.show(category)"
           class='item {{category}}'>
             <p>

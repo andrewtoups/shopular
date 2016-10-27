@@ -14845,10 +14845,11 @@ angular
       { "id": 683, "name": "pillow", "price": 27, "quantity": 10, "color": "black", "discount": 12 }
     ];
 
+    //general model properties:
     this.taxRate = 0.0575;
     this.currency = '$';
 
-    //visible classes:
+    //visible properties:
     this.view = [
       'name', 'quantity', 'color', 'price'
     ];
@@ -14857,11 +14858,10 @@ angular
     this.getHeader = function() {
       return Object.keys(this.inventory[0]);
     };
-    this.header = this.getHeader();
 
-    this.updateView = function(name){
+    this.updateView = function(name) {
       this.view.push(name);
-    }
+    };
 
     this.show = function(type) { // check if item is in view
       return this.view.some(function(value){
@@ -14872,12 +14872,11 @@ angular
       });
     };
 
-    this.tax = function(price){
+    this.tax = function(price) {
       var taxedValue = price + (price*this.taxRate);
       return taxedValue;
-    }
-  }
-);
+    };
+  });
 ;var utils = {
   template: function(source, context){
     source = $(source).html();
