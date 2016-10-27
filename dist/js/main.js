@@ -14844,9 +14844,40 @@ angular
       { "id": 533, "name": "eggs", "price": 5, "quantity": 12, "color": "brown", "discount": 1 },
       { "id": 683, "name": "pillow", "price": 27, "quantity": 10, "color": "black", "discount": 12 }
     ];
-    this.tax = 0.0575;
 
-  });
+    this.taxRate = 0.0575;
+    this.currency = '$';
+
+    //visible classes:
+    this.view = [
+      'name', 'quantity', 'color', 'price'
+    ];
+
+    //methods:
+    this.getHeader = function() {
+      return Object.keys(this.inventory[0]);
+    };
+    this.header = this.getHeader();
+
+    this.updateView = function(name){
+      this.view.push(name);
+    }
+
+    this.show = function(type) { // check if item is in view
+      return this.view.some(function(value){
+        if (value === type)
+          { return true; }
+        else
+          { return false; }
+      });
+    };
+
+    this.tax = function(price){
+      var taxedValue = price + (price*this.taxRate);
+      return taxedValue;
+    }
+  }
+);
 ;var utils = {
   template: function(source, context){
     source = $(source).html();
