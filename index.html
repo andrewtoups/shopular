@@ -9,13 +9,35 @@
   <body>
 
     <main>
-      <ul ng-controller="shopKeeper as shop" class="shop">
+      <ul
+      ng-controller="shopKeeper as shop"
+      class="shop">
         <li>
-          <span ng-repeat="(type, value) in shop.inventory[0]" class='item {{type}}'>{{type}}</span>
+          <span
+          ng-repeat="category in shop.header"
+          ng-if="shop.show(category)"
+          class='item {{category}}'>
+            <p>
+            {{category}}
+            </p>
+          </span>
         </li>
         <li ng-repeat="item in shop.inventory">
-          <span ng-repeat="(type, value) in item" class='item {{type}}'>{{value}}</span>
+          <span
+          ng-if="shop.show(type)"
+          ng-repeat="(type, value) in item"
+          class='item {{type}}'>
+            <p ng-if="type !== 'price'">
+              {{value}}
+            </p>
+            <p ng-if="type === 'price'">
+              {{shop.tax(value - item.discount) | currency : shop.currency}}
+              <img ng-if="item.discount"
+                    src="./dist/images/sale-icon.png"></img>
+            </p>
+          </span>
         </li>
+        <div class="shadow-mask"></div>
       </ul>
     </main>
 
