@@ -1,5 +1,50 @@
+
 * {
   box-sizing: border-box;
+}
+
+main {
+  width: 80%;
+  margin: 40px auto;
+}
+
+button {
+  background: whitesmoke;
+  border: grey 1px solid;
+  border-radius: 3px;
+  //font settings:
+  font-family: sans-serif;
+  font-weight: 100;
+  font-size: 1vw;
+  //box shadow:
+  -webkit-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
+  box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
+  transition: all ease 100ms;
+  &:active {
+    background: black;
+    color: white;
+    -webkit-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.5);
+    box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.5);
+    transition: all ease 100ms;
+  }
+}
+
+.menu {
+  float: left;
+  width: 8%;
+  background: white;
+  -webkit-box-shadow: -1px 3px 4px 1px rgba(0,0,0,0.1);
+  -moz-box-shadow: -1px 3px 4px 1px rgba(0,0,0,0.1);
+  box-shadow: -1px 3px 4px 1px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 50px 0;
+  border-radius: 3px;
+
+  .currency {
+
+  }
 }
 
 .shadow-mask {
@@ -10,6 +55,7 @@
   width: 100%;
   left: 0;
   top: 0;
+  border-radius: 3px;
   //color and drop shadow:
   background: transparent;
   -webkit-box-shadow: inset 0px 10px 181px -38px rgba(0,0,0,0.5);
@@ -23,16 +69,12 @@ ul.shop {
   position: relative;
   list-style: none;
   //outside spacing:
-  width: 80%;
+  width: 100%;
   margin: 40px auto;
   border-bottom: lightgrey 1px solid;
   border-right: lightgrey 1px solid;
   //insdie spacing:
   padding-left: 0;
-  //font settings:
-  font-family: sans-serif;
-  font-weight: 100;
-  font-size: 1vw;
   //drop shadow:
   -webkit-box-shadow: inset 0px 10px 181px -38px rgba(0,0,0,0.2);
   -moz-box-shadow: inset 0px 10px 181px -38px rgba(0,0,0,0.2);
