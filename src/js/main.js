@@ -57,6 +57,10 @@ angular
       'name', 'quantity', 'color', 'price'
     ];
 
+    this.tableWidth = {
+      "width": 100/this.view.length + "%"
+    }
+
     //methods:
     this.getHeader = function() {
       return Object.keys(this.inventory[0]);

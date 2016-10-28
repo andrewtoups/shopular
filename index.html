@@ -21,6 +21,7 @@
         <li>
           <span
           ng-repeat="category in shop.getHeader()"
+          ng-style="shop.tableWidth"
           ng-if="shop.show(category)"
           class='item {{category}}'>
             <p>
