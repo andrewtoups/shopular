@@ -88,4 +88,13 @@ angular
       var taxedValue = price + (price*this.taxRate);
       return taxedValue;
     };
+
+    this.exchange = function(price) {
+      // change from dollar to pound
+      if (self.currency.symbol === '$'){
+        return price;
+      } else if (self.currency.symbol === '£'){
+        return price * 1.5;
+      }
+    }
   });

@@ -37,7 +37,7 @@
               {{shop.localize(value)}}
             </p>
             <p ng-if="type === 'price'">
-              {{shop.tax(value - item.discount) | currency : shop.currency.symbol}}
+              {{shop.exchange(shop.tax(value - item.discount)) | currency : shop.currency.symbol}}
               <img ng-if="item.discount"
                     src="./dist/images/sale-icon.png"></img>
             </p>
