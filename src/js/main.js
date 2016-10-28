@@ -19,8 +19,38 @@ angular
     ];
 
     //general model properties:
+    var self = this;
     this.taxRate = 0.0575;
-    this.currency = '$';
+    this.locales = {
+      "$": ['rubbish bin', 'colour'], //value to change to if previous currency
+      "£": ['waste basket', 'color'],
+      match: function (string) {
+        return this[self.currency.symbol].some(function(value){
+          if (string === value) {return true;}
+          else {return false;}
+        });
+      },
+      filter: function(string){
+        var index = this[self.currency.symbol].indexOf(string);
+        if (self.currency.symbol === "£") {
+          string = this["$"][index];
+        } else if (self.currency.symbol === "$") {
+          string = this["£"][index];
+        }
+        return string;
+      }
+    };
+
+    this.currency = {
+      symbol: "$",
+      label: "USD",
+      toggle: function(){
+        if (this.symbol === "$") { this.symbol = "£";}
+        else {this.symbol = "$";}
+        if (this.label === "USD") {this.label = "GBP";}
+        else {this.label = "USD";}
+      }
+    };
 
     //visible properties:
     this.view = [
@@ -35,6 +65,15 @@ angular
     this.updateView = function(name) {
       this.view.push(name);
     };
+
+    this.localize = function(string){
+      string = string.toString();
+      if (self.locales.match(string)) {
+        return self.locales.filter(string)
+      } else {
+        return string;
+      }
+    }
 
     this.show = function(type) { // check if item is in view
       return this.view.some(function(value){

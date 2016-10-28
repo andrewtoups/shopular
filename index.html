@@ -6,11 +6,17 @@
     <title>Inventory Management</title>
     <link rel="stylesheet" href="dist/styles/main.min.css" type="text/css">
   </head>
-  <body>
+  <body ng-controller="shopKeeper as shop">
+
+    <aside class="menu">
+      <button class="currency" type="button" ng-click="shop.currency.toggle()">
+        {{shop.currency.label}} {{shop.currency.symbol}}
+      </button>
+    </aside>
 
     <main>
+
       <ul
-      ng-controller="shopKeeper as shop"
       class="shop">
         <li>
           <span
@@ -18,7 +24,7 @@
           ng-if="shop.show(category)"
           class='item {{category}}'>
             <p>
-            {{category}}
+            {{shop.localize(category)}}
             </p>
           </span>
         </li>
@@ -28,10 +34,10 @@
           ng-repeat="(type, value) in item"
           class='item {{type}}'>
             <p ng-if="type !== 'price'">
-              {{value}}
+              {{shop.localize(value)}}
             </p>
             <p ng-if="type === 'price'">
-              {{shop.tax(value - item.discount) | currency : shop.currency}}
+              {{shop.tax(value - item.discount) | currency : shop.currency.symbol}}
               <img ng-if="item.discount"
                     src="./dist/images/sale-icon.png"></img>
             </p>
