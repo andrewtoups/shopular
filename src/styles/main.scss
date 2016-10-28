@@ -20,14 +20,14 @@ button {
   -webkit-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
   -moz-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
   box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
-  transition: all ease 100ms;
+  // transition: all linear 100ms;
   &:active {
-    background: black;
-    color: white;
+    background: grey;
+    color: lightgrey;
     -webkit-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.5);
     -moz-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.5);
     box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.5);
-    transition: all ease 100ms;
+    // transition: all linear 100ms;
   }
 }
 
@@ -55,7 +55,7 @@ button {
   width: 100%;
   left: 0;
   top: 0;
-  border-radius: 3px;
+  border-radius: 25px;
   //color and drop shadow:
   background: transparent;
   -webkit-box-shadow: inset 0px 10px 181px -38px rgba(0,0,0,0.5);
@@ -71,8 +71,8 @@ ul.shop {
   //outside spacing:
   width: 100%;
   margin: 40px auto;
-  border-bottom: lightgrey 1px solid;
-  border-right: lightgrey 1px solid;
+  border: lightgrey 1px solid;
+  border-radius: 25px;
   //insdie spacing:
   padding-left: 0;
   //drop shadow:
@@ -87,6 +87,15 @@ ul.shop {
       background: grey;
       color: whitesmoke;
       text-align: center;
+      span.item {
+        padding-left: 0;
+        &:first-child {
+          border-top-left-radius: 25px;
+        }
+        &:last-child {
+          border-top-right-radius: 25px;
+        }
+      }
     }
     //every other line:
     &:nth-child(2n) {
@@ -105,6 +114,9 @@ ul.shop {
       text-transform: capitalize;
       text-overflow: ellipsis;
       white-space: nowrap;
+      &:first-child {
+        border-left: none;
+      }
       //content formatting:
       p {
         margin: 0;
