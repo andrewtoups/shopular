@@ -14884,6 +14884,10 @@ angular
       'name', 'quantity', 'color', 'price'
     ];
 
+    this.tableWidth = {
+      "width": 100/this.view.length + "%"
+    }
+
     //methods:
     this.getHeader = function() {
       return Object.keys(this.inventory[0]);
@@ -14915,6 +14919,15 @@ angular
       var taxedValue = price + (price*this.taxRate);
       return taxedValue;
     };
+
+    this.exchange = function(price) {
+      // change from dollar to pound
+      if (self.currency.symbol === '$'){
+        return price;
+      } else if (self.currency.symbol === '£'){
+        return price * 1.5;
+      }
+    }
   });
 ;var utils = {
   template: function(source, context){
