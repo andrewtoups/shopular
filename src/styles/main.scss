@@ -3,32 +3,51 @@
   box-sizing: border-box;
 }
 
-main {
-  width: 80%;
-  margin: 40px auto;
-}
-
-button {
-  background: whitesmoke;
-  border: grey 1px solid;
-  border-radius: 3px;
+body {
   //font settings:
   font-family: sans-serif;
   font-weight: 100;
   font-size: 1vw;
-  //box shadow:
-  -webkit-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
-  -moz-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
-  box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
-  // transition: all linear 100ms;
-  &:active {
-    background: grey;
-    color: lightgrey;
-    -webkit-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.5);
-    -moz-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.5);
-    box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.5);
-    // transition: all linear 100ms;
+
+  main {
+    width: 80%;
+    margin: 40px auto;
   }
+
+  button {
+    background: whitesmoke;
+    border: grey 1px solid;
+    border-radius: 3px;
+    //box shadow:
+    -webkit-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
+    box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
+    &:active {
+      background: grey;
+      color: lightgrey;
+      -webkit-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.5);
+      -moz-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.5);
+      box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.5);
+    }
+  }
+
+  h3 {
+    font-weight: 100;
+    font-size: 1.2vw;
+  }
+
+  input {
+    border-radius: 10px;
+    border: none;
+    -webkit-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
+    box-shadow: inset 0px 0px 6px 0px rgba(0,0,0,0.2);
+  }
+}
+
+.placeholder {
+  text-align: center;
+  text-transform: capitalize;
 }
 
 .menu {
@@ -39,17 +58,51 @@ button {
   -moz-box-shadow: -1px 3px 4px 1px rgba(0,0,0,0.1);
   box-shadow: -1px 3px 4px 1px rgba(0,0,0,0.1);
   text-align: center;
-  padding: 50px 0;
+  padding: 10px 5px;
   border-radius: 3px;
 
-  .currency {
-
+  h3 {
+    border-bottom: 1px solid lightgrey;
   }
+
+  .currency {
+    width: 100%;
+    font-size: 1.2vw;
+  }
+
+  .newItem {
+    input {
+      width: 100%;
+      margin: 10px 0;
+      font-size: 1.2vw;
+      padding: 2px 4px;
+      &::-webkit-input-placeholder {
+        @extend .placeholder;
+      }
+      &:invalid.ng-touched {
+        background: #ffb6b6;
+        &::-webkit-input-placeholder {
+          color: whitesmoke;
+          @extend .placeholder;
+        }
+
+      }
+
+    }
+    .addNewItem {
+      @extend button;
+      border-radius: 7px;
+    }
+  }
+
 }
 
 .shadow-mask {
   //display properties:
+  display: block;
   position: absolute;
+  content: "";
+  pointer-events: none;
   //size and position:
   height: 100%;
   width: 100%;
@@ -106,6 +159,7 @@ ul.shop {
       //display properties:
       display: table-cell;
       overflow: hidden;
+      position: relative;
       //outside spacing:
       border-left: lightgrey 1px solid;
       //inside spacing:
@@ -114,6 +168,7 @@ ul.shop {
       text-transform: capitalize;
       text-overflow: ellipsis;
       white-space: nowrap;
+
       &:first-child {
         border-left: none;
       }
@@ -121,6 +176,7 @@ ul.shop {
       p {
         margin: 0;
         padding: 1em 0;
+        display: inline-block;
 
         img {
           height: 1em;
@@ -128,6 +184,38 @@ ul.shop {
           transform-origin: left;
         }
       }
+      input {
+        transform: scale(1.5);
+        transform-origin: right;
+        border: none;
+        border-radius: none;
+        color: transparent;
+        background: transparent;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        position: absolute;
+        right: 5px;
+        height: 100%;
+        &:focus{
+          outline: none;
+          cursor: default;
+        }
+      }
     }
+    //header properties
+    span.header {
+      &:hover {
+        cursor: pointer;
+      }
+      &:active {
+        background: black;
+        color: white;
+        user-select: none;
+      }
+    }
+  }
+  &:before {
+    @extend .shadow-mask;
   }
 }

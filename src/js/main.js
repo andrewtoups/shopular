@@ -18,8 +18,20 @@ angular
       { "id": 683, "name": "pillow", "price": 27, "quantity": 10, "color": "black", "discount": 12 }
     ];
 
+    //states:
+    this.newItem = {
+      "id": null,
+      "name": null,
+      "price": null,
+      "quantity": null,
+      "color": null,
+      "discount": null
+    };
+
     //general model properties:
-    var self = this;
+    this.ids = this.inventory.map(function(value){
+      return value.id;
+    });
     this.taxRate = 0.0575;
     this.locales = {
       "$": ['rubbish bin', 'colour'], //value to change to if previous currency

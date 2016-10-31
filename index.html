@@ -9,42 +9,59 @@
   <body ng-controller="shopKeeper as shop">
 
     <aside class="menu">
+
+      <h3>Currency:</h3>
       <button class="currency" type="button" ng-click="shop.currency.toggle()">
         {{shop.currency.label}} {{shop.currency.symbol}}
       </button>
+
+      <h3>New Item:</h3>
+      <form class="newItem" name="newItemForm" ng-submit="shop.addItem()">
+        <input
+        ng-repeat="property in shop.header"
+        class="new{{ property }}"
+        placeholder="{{ property }}"
+        type="{{ (property === 'name' || property === 'color' || property === 'colour') ? 'text' : 'number' }}"
+        step="{{ (property === 'price' || property === 'discount') ? '0.01' : '1' }}"
+        ng-model="shop.newItem[property]"
+        ng-required="{{ property !== 'id' ? 'true' : 'false'}}"
+        >
+        <input class="addNewItem" type="submit" value="Add" ng-disabled="newItem.$value.$invalid"></input>
+
+      </form>
     </aside>
 
     <main>
-
       <ul
       class="shop">
         <li>
           <span
-          ng-repeat="category in shop.getHeader()"
+          ng-repeat="category in shop.header track by $index"
           ng-style="shop.tableWidth"
           ng-if="shop.show(category)"
-          class='item {{category}}'>
+          ng-click="shop.toggleSort(category)"
+          class='item header {{category}}'>
             <p>
-            {{shop.localize(category)}}
+            {{category}}
             </p>
           </span>
         </li>
-        <li ng-repeat="item in shop.inventory">
+        <li ng-repeat="item in shop.inventory | orderBy:shop.sortBy:shop.sortOrder track by $index">
           <span
           ng-if="shop.show(type)"
           ng-repeat="(type, value) in item"
           class='item {{type}}'>
             <p ng-if="type !== 'price'">
-              {{shop.localize(value)}}
+              {{value}}
             </p>
             <p ng-if="type === 'price'">
-              {{shop.exchange(shop.tax(value - item.discount)) | currency : shop.currency.symbol}}
+              {{shop.tax(value - item.discount) | currency : shop.currency.symbol}}
               <img ng-if="item.discount"
                     src="./dist/images/sale-icon.png"></img>
             </p>
+            <input ng-if="type === 'quantity'" type="number" ng-model="item.quantity"></input>
           </span>
         </li>
-        <div class="shadow-mask"></div>
       </ul>
     </main>
 
