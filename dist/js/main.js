@@ -14827,9 +14827,13 @@ return jQuery;
 } );
 ;'use strict';
 
-angular
+var app = angular
   .module('inventory', [])
   .controller('shopKeeper', function(){
+    // LOL
+    var self = this;
+
+    // THE MODEL:
     this.inventory = [
       { "id": 2957, "name": "widget", "price": 32, "quantity": 203, "color": "red", "discount": 31 },
       { "id": 89274, "name": "golf club", "price": 98, "quantity": 10, "color": "black", "discount": 0 },
@@ -14845,8 +14849,20 @@ angular
       { "id": 683, "name": "pillow", "price": 27, "quantity": 10, "color": "black", "discount": 12 }
     ];
 
+    //states:
+    this.newItem = {
+      "id": null,
+      "name": null,
+      "price": null,
+      "quantity": null,
+      "color": null,
+      "discount": null
+    };
+
     //general model properties:
-    var self = this;
+    this.ids = this.inventory.map(function(value){
+      return value.id;
+    });
     this.taxRate = 0.0575;
     this.locales = {
       "$": ['rubbish bin', 'colour'], //value to change to if previous currency
@@ -14871,15 +14887,18 @@ angular
     this.currency = {
       symbol: "$",
       label: "USD",
-      toggle: function(){
+      toggle: function() {
         if (this.symbol === "$") { this.symbol = "£";}
         else {this.symbol = "$";}
         if (this.label === "USD") {this.label = "GBP";}
         else {this.label = "USD";}
+        self.localize();
+        self.exchange();
       }
     };
 
     //visible properties:
+
     this.view = [
       'name', 'quantity', 'color', 'price'
     ];
@@ -14888,23 +14907,98 @@ angular
       "width": 100/this.view.length + "%"
     }
 
-    //methods:
-    this.getHeader = function() {
-      return Object.keys(this.inventory[0]);
-    };
+    this.header = Object.keys(this.inventory[0]);
 
-    this.updateView = function(name) {
-      this.view.push(name);
-    };
+    //sort flags:
 
-    this.localize = function(string){
-      string = string.toString();
-      if (self.locales.match(string)) {
-        return self.locales.filter(string)
-      } else {
-        return string;
-      }
+    this.sortBy = 'name';
+    this.sortOrder = true;
+    this.toggleSort = function(category){
+      this.sortBy = category;
+      this.sortOrder = !this.sortOrder;
     }
+
+    //methods:
+
+    // model update methods:
+
+    this.generateId = function() {
+      var id = Math.floor(Math.random()*99999);
+      if (self.ids.some(function(value){return id === value;})){
+        self.generateId();
+      } else {
+        return id;
+      }
+    };
+
+    this.addItem = function() {
+      if (!self.newItem.id) {
+        self.newItem.id = self.generateId();
+      }
+      var item = {};
+      for (var property in self.newItem) {
+        item[property] = self.newItem[property];
+        self.newItem[property] = null;
+      }
+      self.inventory.push(item);
+    };
+
+
+    this.updateView = function(views) {
+      //sort indices in descending order
+      var indices = Object.keys(views).sort(function(a, b) {
+        return b - a;
+      });
+      //remove views
+      for (var index = indices.length - 1; index >= 0; index--) {
+        self.view.splice(indices[index], 1);
+      }
+      //add views
+      for (var name in views){
+        self.view.push(views[name]);
+      }
+      self.header = Object.keys(self.inventory[0]);
+    };
+
+    this.localize = function(){
+      var update = false;
+      var views = {};
+      self.inventory.forEach(function(item){
+        for (var key in item) {
+          key = key.toString();
+          var value = item[key].toString();
+          if (self.locales.match(value)) {
+            item[key] = self.locales.filter(item[key]);
+          }
+          if (self.locales.match(key)) {
+            update = true;
+            var index = self.view.indexOf(key);
+            var newKey = self.locales.filter(key);
+            views[index] = newKey; // update list of views to change by index
+            item[newKey] = item[key];
+            delete item[key];
+          }
+        }
+      });
+      if (update) {
+        self.updateView(views);
+      }
+    };
+
+    this.exchange = function(price) {
+      // change from dollar to pound
+      self.inventory.forEach(function(item){
+        if (self.currency.symbol === '$'){
+          item.price /= 1.5;
+          item.discount /= 1.5;
+        } else if (self.currency.symbol === '£'){
+          item.price *= 1.5;
+          item.discount *= 1.5;
+        }
+      })
+    };
+
+    // model display methods:
 
     this.show = function(type) { // check if item is in view
       return this.view.some(function(value){
@@ -14920,14 +15014,6 @@ angular
       return taxedValue;
     };
 
-    this.exchange = function(price) {
-      // change from dollar to pound
-      if (self.currency.symbol === '$'){
-        return price;
-      } else if (self.currency.symbol === '£'){
-        return price * 1.5;
-      }
-    }
   });
 ;var utils = {
   template: function(source, context){
