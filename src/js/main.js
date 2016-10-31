@@ -1,8 +1,12 @@
 'use strict';
 
-angular
+var app = angular
   .module('inventory', [])
   .controller('shopKeeper', function(){
+    // LOL
+    var self = this;
+
+    // THE MODEL:
     this.inventory = [
       { "id": 2957, "name": "widget", "price": 32, "quantity": 203, "color": "red", "discount": 31 },
       { "id": 89274, "name": "golf club", "price": 98, "quantity": 10, "color": "black", "discount": 0 },
