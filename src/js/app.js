@@ -185,7 +185,7 @@ var app = angular
 
     this.createTable = function() {
       self.inventory = Storage.get();
-      if (self.inventory === []){
+      if (!self.inventory.length){
         self.inventory = InventoryManage.load().data;
       }
       self.header = Object.keys(self.inventory[0]);
