@@ -52,6 +52,9 @@ body {
 
 .menu {
   float: left;
+  &.right {
+    float: right;
+  }
   width: 8%;
   background: white;
   -webkit-box-shadow: -1px 3px 4px 1px rgba(0,0,0,0.1);
@@ -70,25 +73,23 @@ body {
     font-size: 1.2vw;
   }
 
-  .newItem {
-    input {
-      width: 100%;
-      margin: 10px 0;
-      font-size: 1.2vw;
-      padding: 2px 4px;
+  input {
+    width: 100%;
+    margin: 10px 0;
+    font-size: 1.2vw;
+    padding: 2px 4px;
+    &::-webkit-input-placeholder {
+      @extend .placeholder;
+    }
+    &:invalid.ng-touched {
+      background: #ffb6b6;
       &::-webkit-input-placeholder {
+        color: whitesmoke;
         @extend .placeholder;
-      }
-      &:invalid.ng-touched {
-        background: #ffb6b6;
-        &::-webkit-input-placeholder {
-          color: whitesmoke;
-          @extend .placeholder;
-        }
-
       }
 
     }
+
     .addNewItem {
       @extend button;
       border-radius: 7px;
@@ -185,18 +186,20 @@ ul.shop {
         }
       }
       input {
-        transform: scale(1.5);
-        transform-origin: right;
-        border: none;
-        border-radius: none;
+        //display properties:
+        position: absolute;
+        right: 5px;
+        bottom: 2px;
+        height: 85%;
+        width: 1em;
+        font-size: 2em;
+        //colors (set to hide input box)
         color: transparent;
-        background: transparent;
+        background: grey;
+        opacity: 0.5;
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
         box-shadow: none;
-        position: absolute;
-        right: 5px;
-        height: 100%;
         &:focus{
           outline: none;
           cursor: default;

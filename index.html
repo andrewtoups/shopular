@@ -1,69 +1,65 @@
 <!DOCTYPE html>
 <html ng-app='inventory'>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory Management</title>
-    <link rel="stylesheet" href="dist/styles/main.min.css" type="text/css">
-  </head>
-  <body ng-controller="shopKeeper as shop">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory Management</title>
+  <link rel="stylesheet" href="dist/styles/main.min.css" type="text/css">
+</head>
+<body ng-controller="shopKeeper as shop">
 
-    <aside class="menu">
+<aside class="menu left">
 
-      <h3>Currency:</h3>
-      <button class="currency" type="button" ng-click="shop.currency.toggle()">
-        {{shop.currency.label}} {{shop.currency.symbol}}
-      </button>
+  <h3>Currency:</h3>
+  <button class="currency" type="button" ng-click="shop.currency.toggle()">
+    {{shop.currency.label}} {{shop.currency.symbol}}
+  </button>
 
-      <h3>New Item:</h3>
-      <form class="newItem" name="newItemForm" ng-submit="shop.addItem()">
-        <input
-        ng-repeat="property in shop.header"
-        class="new{{ property }}"
-        placeholder="{{ property }}"
-        type="{{ (property === 'name' || property === 'color' || property === 'colour') ? 'text' : 'number' }}"
-        step="{{ (property === 'price' || property === 'discount') ? '0.01' : '1' }}"
-        ng-model="shop.newItem[property]"
-        ng-required="{{ property !== 'id' ? 'true' : 'false'}}"
-        >
-        <input class="addNewItem" type="submit" value="Add" ng-disabled="newItem.$value.$invalid"></input>
+  <h3>New Item:</h3>
+  <form class="newItem" name="newItemForm" ng-submit="shop.addItem()">
+    <input ng-repeat="property in shop.header" class="new{{ property }}" placeholder="{{ property }}"
+    type="{{ (property === 'name' || property === 'color' || property === 'colour') ? 'text' : 'number' }}"
+    step="{{ (property === 'price' || property === 'discount') ? '0.01' : '1' }}" ng-model="shop.newItem[property]"
+    ng-required="{{ property !== 'id' ? 'true' : 'false'}}"></input>
+    <input class="addNewItem" type="submit" value="Add" ng-disabled="newItem.$value.$invalid"></input>
 
-      </form>
-    </aside>
+  </form>
+</aside>
 
-    <main>
-      <ul
-      class="shop">
-        <li>
-          <span
-          ng-repeat="category in shop.header track by $index"
-          ng-style="shop.tableWidth"
-          ng-if="shop.show(category)"
-          ng-click="shop.toggleSort(category)"
-          class='item header {{category}}'>
-            <p>
-            {{category}}
-            </p>
-          </span>
-        </li>
-        <li ng-repeat="item in shop.inventory | orderBy:shop.sortBy:shop.sortOrder track by $index">
-          <span
-          ng-if="shop.show(type)"
-          ng-repeat="(type, value) in item"
-          class='item {{type}}'>
-            <p ng-if="type !== 'price'">
-              {{value}}
-            </p>
-            <p ng-if="type === 'price'">
-              {{shop.tax(value - item.discount) | currency : shop.currency.symbol}}
-              <img ng-if="item.discount"
-                    src="./dist/images/sale-icon.png"></img>
-            </p>
-            <input ng-if="type === 'quantity'" type="number" ng-model="item.quantity"></input>
-          </span>
-        </li>
-      </ul>
-    </main>
+<aside class="menu right">
+  <h3 ng-hide="shop.users.length">Login:</h3>
+  <form class="login" ng-submit="shop.login()" ng-hide="shop.users.length">
+    <input ng-hide="shop.users.length" ng-model="shop.newUser.username" placeholder="username"></input>
+  </form>
+  <h3 ng-show="shop.users.length">{{shop.newUser.username}}</h3>
+  <p ng-show="shop.users.length">{{shop.newUser.timestamp}}</p>
+</aside>
+
+<main>
+  <ul
+  class="shop">
+    <li>
+      <span ng-repeat="category in shop.header track by $index" ng-style="shop.tableWidth"
+      ng-if="shop.show(category)" ng-click="shop.toggleSort(category)" class='item header {{category}}'>
+        <p>
+        {{category}}
+        </p>
+      </span>
+    </li>
+    <li ng-repeat="item in shop.inventory | orderBy:shop.sortBy:shop.sortOrder track by $index">
+      <span ng-if="shop.show(type)" ng-repeat="(type, value) in item" class='item {{type}}'>
+        <p ng-if="type !== 'price'">
+          {{value}}
+        </p>
+        <p ng-if="type === 'price'">
+          {{shop.tax(value - item.discount) | currency : shop.currency.symbol}}
+          <img ng-if="item.discount" src="./dist/images/sale-icon.png"></img>
+        </p>
+        <input ng-if="type === 'quantity'" type="number" ng-model="item.quantity" ng-change="shop.update()"></input>
+      </span>
+    </li>
+  </ul>
+</main>
 
 
 <!--
