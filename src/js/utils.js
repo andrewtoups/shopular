@@ -1,11 +1,17 @@
 var utils = {
-  template: function(source, context){
-    source = $(source).html();
-    var template = Handlebars.compile(source);
-    context = {} || context;
-    var html = template(context);
-    return html;
+
+  formatDate: function(date){
+    var hours = date.getHours();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    var hours = hours >= 13 ? hours - 12 : hours;
+    var month = utils.monthNames[date.getMonth()];
+    var dateString = month + " " + date.getDate() + " - " +
+                     hours + ":" + date.getMinutes() + " " + ampm;
+    return dateString;
   },
+
+  monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+               'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 
   loader: {
     isLoading: false,
