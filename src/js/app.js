@@ -88,7 +88,7 @@ var app = angular
     // model update methods:
 
     this.update = function() {
-      Storage.set(self.sessionItems);
+      Storage.set(self.inventory);
     };
 
     this.generateId = function() {
@@ -110,8 +110,7 @@ var app = angular
         self.newItem[property] = null;
       }
       self.inventory.push(item);
-      self.sessionItems.push(item);
-      Storage.set(self.sessionItems);
+      Storage.set(self.inventory);
     };
 
 
@@ -185,14 +184,13 @@ var app = angular
     };
 
     this.createTable = function() {
-      InventoryManage.load().then(function (response) {
-        self.inventory = response.data;
-        self.sessionItems = Storage.get();
-        self.inventory = self.inventory.concat(self.sessionItems);
-        self.header = Object.keys(self.inventory[0]);
-        self.ids = self.inventory.map(function(value){
-          return value.id;
-        });
+      self.inventory = Storage.get();
+      if (self.inventory === []){
+        self.inventory = InventoryManage.load().data;
+      }
+      self.header = Object.keys(self.inventory[0]);
+      self.ids = self.inventory.map(function(value){
+        return value.id;
       });
     };
 
