@@ -13,3 +13,7 @@ There is a dummy "login" system that is not persistent. It just spits back your 
 The "add item" menu also works dynamically, and creates each property based on what is in the dynamically generated header array. It then pushes a new item object into the model based on those properties.
 
 The controller code is unwieldy and probably could be broken into services, but because of how much of the table is dynamically created, the html is nice and lean!
+
+## Page
+
+[clicky](https://andrewtoups.github.io/shopular/)
